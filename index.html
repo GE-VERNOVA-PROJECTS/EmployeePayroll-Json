@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Payroll App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1>Employee Payroll</h1>
+  <button id="addBtn" class="btn-primary">+ Add Employee</button>
+</header>
+
+<section class="controls">
+  <input type="text" id="searchInput" placeholder="Search employees...">
+  
+  <select id="sortSelect">
+    <option value="">Sort By</option>
+    <option value="name-asc">Name A-Z</option>
+    <option value="name-desc">Name Z-A</option>
+    <option value="salary-asc">Salary Low-High</option>
+    <option value="salary-desc">Salary High-Low</option>
+    <option value="date-desc">Newest</option>
+    <option value="date-asc">Oldest</option>
+  </select>
+</section>
+
+<section class="stats">
+  <div class="card stat purple">
+    <h3>Total Employees</h3>
+    <p id="totalEmployees">0</p>
+  </div>
+  <div class="card stat green">
+    <h3>Total Payroll</h3>
+    <p id="totalPayroll">₹0</p>
+  </div>
+  <div class="card stat orange">
+    <h3>Average Salary</h3>
+    <p id="avgSalary">₹0</p>
+  </div>
+</section>
+
+<section id="employeeContainer" class="grid"></section>
+
+<!-- Modal Form -->
+<div id="formModal" class="modal hidden">
+  <div class="modal-content">
+    <h2 id="formTitle">Add Employee</h2>
+
+    <form id="employeeForm">
+      <input type="hidden" id="employeeId">
+
+      <label>Name</label>
+      <input type="text" id="name">
+      <small class="error" id="nameError"></small>
+
+      <label>Email</label>
+      <input type="email" id="email">
+      <small class="error" id="emailError"></small>
+
+      <label>Phone</label>
+      <input type="text" id="phone">
+      <small class="error" id="phoneError"></small>
+
+      <label>Salary</label>
+      <input type="number" id="salary">
+      <small class="error" id="salaryError"></small>
+
+      <label>Department</label>
+      <select id="department">
+        <option>Engineering</option>
+        <option>Sales</option>
+        <option>Marketing</option>
+        <option>HR</option>
+        <option>Finance</option>
+        <option>Operations</option>
+      </select>
+
+      <label>Start Date</label>
+      <input type="date" id="startDate">
+      <small class="error" id="dateError"></small>
+
+      <label>Notes</label>
+      <textarea id="notes"></textarea>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-success">Save</button>
+        <button type="button" id="cancelBtn" class="btn-secondary">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
