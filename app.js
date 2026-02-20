@@ -22,17 +22,36 @@ function displayEmployees(data) {
   container.innerHTML = "";
 
   data.forEach(emp => {
-    container.innerHTML += `
-      <div class="card">
-        <h3>${emp.name}</h3>
-        <p>${emp.email}</p>
-        <p>${emp.department}</p>
-        <p>₹${emp.salary}</p>
-        <p>${emp.phone}</p>
-        <button onclick="editEmployee(${emp.id})" class="btn-success">Edit</button>
-        <button onclick="deleteEmployee(${emp.id})" class="btn-danger">Delete</button>
-      </div>
-    `;
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const name = document.createElement("h3");
+    name.textContent = emp.name;
+
+    const email = document.createElement("p");
+    email.textContent = emp.email;
+
+    const dept = document.createElement("p");
+    dept.textContent = emp.department;
+
+    const salary = document.createElement("p");
+    salary.textContent = "₹" + emp.salary;
+
+    const phone = document.createElement("p");
+    phone.textContent = emp.phone;
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.className = "btn-success";
+    editBtn.addEventListener("click", () => editEmployee(emp.id));
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.className = "btn-danger";
+    deleteBtn.addEventListener("click", () => deleteEmployee(emp.id));
+
+    card.append(name, email, dept, salary, phone, editBtn, deleteBtn);
+    container.appendChild(card);
   });
 }
 
@@ -73,13 +92,15 @@ document.getElementById("employeeForm").addEventListener("submit", async e => {
 
 // DELETE
 async function deleteEmployee(id) {
-  await fetch(`${API}/${id}`,{method:"DELETE"});
-  fetchEmployees();
+  await fetch(`${API}/${id}`, { method: "DELETE" });
+  await fetchEmployees();
 }
 
 // EDIT
 function editEmployee(id) {
-  const emp = allEmployees.find(e=>e.id===id);
+  const emp = allEmployees.find(e => e.id === Number(id));
+  if (!emp) return;
+
   document.getElementById("employeeId").value = emp.id;
   document.getElementById("name").value = emp.name;
   document.getElementById("email").value = emp.email;
@@ -88,6 +109,7 @@ function editEmployee(id) {
   document.getElementById("department").value = emp.department;
   document.getElementById("startDate").value = emp.startDate;
   document.getElementById("notes").value = emp.notes;
+
   openModal();
 }
 
@@ -136,21 +158,40 @@ function show(id,msg){
   return false;
 }
 
-function getFormData(){
+function getFormData() {
   return {
-    name:name.value,
-    email:email.value,
-    phone:phone.value,
-    salary:Number(salary.value),
-    department:department.value,
-    startDate:startDate.value,
-    notes:notes.value
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    salary: Number(document.getElementById("salary").value),
+    department: document.getElementById("department").value,
+    startDate: document.getElementById("startDate").value,
+    notes: document.getElementById("notes").value
   };
 }
 
 // MODAL
-function openModal(){ formModal.classList.remove("hidden"); }
-function closeModal(){ formModal.classList.add("hidden"); employeeForm.reset(); }
+// MODAL ELEMENTS
+const formModal = document.getElementById("formModal");
+const employeeForm = document.getElementById("employeeForm");
+const addBtn = document.getElementById("addBtn");
+const cancelBtn = document.getElementById("cancelBtn");
 
-addBtn.onclick=openModal;
-cancelBtn.onclick=closeModal;
+// MODAL FUNCTIONS
+function openModal() {
+  formModal.classList.remove("hidden");
+}
+
+function closeModal() {
+  formModal.classList.add("hidden");
+  employeeForm.reset();
+  document.getElementById("employeeId").value = "";
+}
+
+// BUTTON EVENTS
+addBtn.addEventListener("click", openModal);
+cancelBtn.addEventListener("click", closeModal);
+
+// Make functions global for inline onclick
+window.editEmployee = editEmployee;
+window.deleteEmployee = deleteEmployee;

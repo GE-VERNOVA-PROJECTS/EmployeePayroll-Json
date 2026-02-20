@@ -1,3 +1,34 @@
 {
-    "employees":[]
+  "employees": [
+    {
+      "id": "c085",
+      "name": "Barsha Shil",
+      "email": "barsha56@gmail.com",
+      "phone": "9876512345",
+      "salary": 100000,
+      "department": "Sales",
+      "startDate": "2018-12-01",
+      "notes": ""
+    },
+    {
+      "id": "9a51",
+      "name": "Saptadipa Datta",
+      "email": "saptadipadatta2003@gmail.com",
+      "phone": "7005629322",
+      "salary": 90000,
+      "department": "Engineering",
+      "startDate": "2025-02-22",
+      "notes": ""
+    },
+    {
+      "id": "1675",
+      "name": "Barnali Debnath",
+      "email": "barnali03@gmail.com",
+      "phone": "8883212567",
+      "salary": 200000,
+      "department": "Sales",
+      "startDate": "2020-12-01",
+      "notes": ""
+    }
+  ]
 }
